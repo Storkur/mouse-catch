@@ -48,6 +48,11 @@ namespace MouseCatch
 			};
         }
 
+		void Client()
+		{
+
+		}
+
 		[DllImport("user32.dll")]
 		public static extern void mouse_event(uint dwFlags, int dx, int dy, uint dwData, UIntPtr dwExtraInfo);
     }
