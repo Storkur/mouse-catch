@@ -16,6 +16,7 @@ namespace InputProxy
             socket.Listen(10);
             for (; ; )
             {
+                Console.WriteLine("Waiting Socket.Accept");
                 var client = socket.Accept();
                 Console.WriteLine("connected..");
                 var thread = new System.Threading.Thread(() =>
@@ -25,12 +26,12 @@ namespace InputProxy
                         var clientReader = new System.IO.BinaryReader(new NetworkStream(client));
                         for (; ; )
                         {
-                            if (client.Poll(1, SelectMode.SelectRead) && client.Available == 0)
+                            if (client.Poll(1, SelectMode.SelectRead) && client.Available == 0) //Если клиент отключился?
                             {
                                 Console.WriteLine("disconnected..");
                                 break;
                             }
-                            if (client.Available > 0)
+                            if (client.Available > 0)   //Если есть данные для чтения из сокета
                             {
                                 var msgSize = clientReader.ReadInt32();
                                 var message = clientReader.ReadBytes(msgSize);
